@@ -275,6 +275,23 @@ def get_args(module=None, **kwargs):
         'default': '0.25',
         'type': str
     }
+    g_code = {
+        'short': '-code',
+        'long': '--g_code',
+        'help': 'the genetic code to use for blastx search. Default is %(default)s.',
+        'required': False,
+        'default': '11',
+        'type': int
+    }
+    sensitivity = {
+        'short': '-sens',
+        'long': '--sensitivity',
+        'help': 'the sensitivity to use for DIAMOND searches. Default is "%(default)s".',
+        'required': False,
+        'default': '--very-sensitive',
+        'type': str
+    }
+
 
     distance = {
         'short': '-d',
@@ -556,7 +573,7 @@ def get_args(module=None, **kwargs):
         required_args = [genome, database, outprefix]
         optional_args = [threads, intergenic_length, length_pseudo, shared_hits, evalue, hitcap,
                          contig_ends, intergenic_threshold, reference, diamond, skip_checkdb,
-                         no_bidirectional_length, use_alignment, perc_id, perc_cov, max_dnds, use_deviation]
+                         no_bidirectional_length, use_alignment, perc_id, perc_cov, g_code, sensitivity, max_dnds, use_deviation]
         deprecated_args = [distance]
 
     elif module == 'reannotate':
