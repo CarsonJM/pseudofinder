@@ -383,13 +383,10 @@ def manage_blast_db(args):
 
 def run_diamond(args, search_type: str, in_fasta: str, out_tsv: str) -> None:
     if search_type == 'blastp' or search_type == 'blastx':
-        g_code_arg = ""
-        if search_type == 'blastx':
-            g_code_arg = f"--query-gencode {args.g_code}"
 
         common.print_with_time("Diamond %s executed with %s threads on %s." % (search_type, args.threads, in_fasta))
         diamond_cline = (f"diamond {search_type} --quiet --query {in_fasta} --out {out_tsv} --threads {args.threads} "
-                        f"--max-target-seqs {args.hitcap} --evalue {args.evalue} {args.sensitivity} {g_code_arg} --db {args.database} "
+                        f"--max-target-seqs {args.hitcap} --evalue {args.evalue} {args.sensitivity} --db {args.database} "
                         f"--outfmt 6 qseqid sseqid pident slen mismatch gapopen qstart qend sstart send evalue bitscore stitle "
                         f"--max-hsps 1")
 
