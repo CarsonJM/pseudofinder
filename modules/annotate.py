@@ -228,7 +228,8 @@ def write_fasta(seqs: list, outfile: str, seq_type='nt', in_type='features') -> 
                     print("Invalid seq_type. Please check your write_fasta() function call.")
                     sys.exit(1)
 
-                output_handle.write(">%s %s %s\n%s\n" % (seq.qualifiers['locus_tag'][0],
+                locus_tag = seq.qualifiers['locus_tag'][0].replace('\n', '').replace('\r', '').replace(' ', '_')
+                output_handle.write(">%s %s %s\n%s\n" % (locus_tag,
                                                          seq.qualifiers['contig_id'],
                                                          write_feature_location(seq.location),
                                                          seq_string))
@@ -465,7 +466,7 @@ def add_blasthits_to_genome(args, genome, blast_file, blast_type):
 
     hit_list = convert_tsv_to_blasthits(blast_file, blast_type)
     relevant_features = [f for f in features_with_locus_tags(genome) if f.type == 'CDS' or f.type == 'intergenic' or 'pseudo' in f.type.lower()]
-    feature_dict = {feature.qualifiers['locus_tag'][0]: feature for feature in relevant_features}
+    feature_dict = {feature.qualifiers['locus_tag'][0].replace('\n', '').replace('\r', '').replace(' ', '_'): feature for feature in relevant_features}
 
     for hit in hit_list:
         try:
